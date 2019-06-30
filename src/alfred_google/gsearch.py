@@ -23,9 +23,12 @@ class GoogleSearch:
     def __init__(self, query, port):
 
         self.query = query.encode('utf-8')
-        self.url = u"http://www.google.com/search?" + \
-            urlencode({'q': self.query}) + u"&pws=0&gl=us&gws_rd=cr"
-        self.header = 'Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101'
+
+        self.url = u"https://www.google.com/search?" + urlencode({'q': self.query})
+        # self.url = u"http://www.google.com/search?" + \
+            # urlencode({'q': self.query}) + u"&pws=0&gl=us&gws_rd=cr"
+        self.header = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
+
         self.SOCKS5_PROXY_HOST = '127.0.0.1'
         self.SOCKS5_PROXY_PORT = port
 
@@ -67,7 +70,8 @@ class GoogleParser(HTMLParser):
         self.title = ''
 
     def handle_starttag(self, tag, attrs):
-        if tag == 'h3' and attrs == [('class', 'r')]:
+
+        if tag == 'div' and attrs == [('class', 'r')]:
             self.h3_flag = True
 
         if tag == 'a' and self.h3_flag:
